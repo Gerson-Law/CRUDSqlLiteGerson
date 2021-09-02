@@ -59,7 +59,7 @@
         android:layout_marginTop="10dp"
         android:inputType="text"
         android:hint="Introdusca la descripcion del Producto"
-        android:drawableStart="@drawable/ic_h1"
+        android:drawableStart="@drawable/cf"
         android:drawablePadding="5dp"
         />
 
@@ -92,7 +92,7 @@
         android:textStyle="bold"/>
 
     <Button
-        android:id="@+id/btConsulta1"
+        android:id="@+id/btnConsulta1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Consultar por codigo"
@@ -115,12 +115,12 @@
                 android:textStyle="bold"/>
 
             <Button
-                android:id="@+id/btEliminar"
+                android:id="@+id/btnEliminar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
                 android:text="Eliminar"
-                android:textStyle="bold" />
+                android:layout_marginRight="5dp"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -130,19 +130,11 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnEditar"
+                android:id="@+id/btnActualizar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="Editar"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btGuardar"
-                android:layout_width="123dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="Guardar"
+                android:text="Actualizar"
                 android:textStyle="bold" />
 
             <Button
@@ -151,6 +143,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:text="Nuevo"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnSalir"
+                android:layout_width="123dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="Salir"
                 android:textStyle="bold" />
 
         </LinearLayout>
