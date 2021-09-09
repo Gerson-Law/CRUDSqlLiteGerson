@@ -1,6 +1,7 @@
 package com.itca.crud_sqllite_gerson;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -69,13 +70,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSalir.setOnClickListener(this);
 
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        /*binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
     }
 
     @Override
@@ -102,22 +103,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        AdminSQLiteOpenHelper admin =new AdminSQLiteOpenHelper(this,"administracion.db" ,null,1) ;
+        String codigo = et_codigo.getText().toString();
+        String descripcion = et_descripcion.getText().toString();
+        String precio = et_precio.getText().toString();
 
+        ContentValues registro = new ContentValues();
+        registro.put("codigo", codigo);
+        registro.put("descripcion", descripcion);
+        registro.put("precio", precio);
+        bd.insert("articulos", null, registro);
 
         switch (view.getId()) {
             case R.id.btnAlta:
                 //Toast.makeText(this, "has hecho click en el botn Alta", Toast.LENGTH_SHORT).show();
-                SQLiteDatabase bd = admin.getWritableDatabase();
-                AdminSQLiteOpenHelper admin =new AdminSQLiteOpenHelper(this,"administracion.db" ,null,1) ;
-                String codigo = et_codigo.getText().toString();
-                String descripcion = et_descripcion.getText().toString();
-                String precio = et_precio.getText().toString();
 
-                ContentValues registro = new ContentValues();
-                registro.put("codigo", codigo);
-                registro.put("descripcion", descripcion);
-                registro.put("precio", precio);
-                bd.insert("articulos", null, registro);
                 if(codigo.isEmpty()){
                     et_codigo.setError("campo obligatorio.");
                 }else if(descripcion.isEmpty()){
@@ -134,10 +135,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnConsulta1:
-                Toast.makeText(this, "has hecho click en el botn Consulta1", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "has hecho click en el botn Consulta1", Toast.LENGTH_SHORT).show();
+                codigo = et_codigo.getText().toString();
+                if(codigo.isEmpty()){
+                    et_codigo.setError("campo obligatorio");
+                }else{
+                    Cursor fila =bd.rawQuery("select descripcion, precio from articulos where codigo="+codigo, null);
+                    if(fila.moveToFirst()){
+                        et_descripcion.setText(fila.getString(0));
+                        et_precio.setText(fila.getString(1));
+                    }else{
+                        Toast.makeText(this, "No existe articulo con dicho codigo", Toast.LENGTH_SHORT).show();
+                    }
+                    bd.close();
+                }
                 break;
             case R.id.btnConsulta2:
-                Toast.makeText(this, "has hecho click en el botn Consulta2", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "has hecho click en el botn Consulta2", Toast.LENGTH_SHORT).show();
+                descripcion = et_descripcion.getText().toString();
+                if(descripcion.isEmpty()){
+                    et_descripcion.setError("campo obligatorio");
+                }else{
+                    Cursor fila =bd.rawQuery("select codigo, precio from articulos where descripcion ='" + descripcion +"'", null);
+                    if(fila.moveToFirst()){
+                        et_codigo.setText(fila.getString(0));
+                        et_precio.setText(fila.getString(1));
+                    }else{
+                        Toast.makeText(this, "No existe articulo con dicha descripcion", Toast.LENGTH_SHORT).show();
+                    }
+                    bd.close();
+                }
                 break;
             case R.id.btnEliminar:
                 Toast.makeText(this, "has hecho click en el botn Eliminar", Toast.LENGTH_SHORT).show();
