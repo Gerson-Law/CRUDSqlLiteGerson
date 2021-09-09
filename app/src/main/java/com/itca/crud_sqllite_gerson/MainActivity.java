@@ -167,7 +167,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnEliminar:
-                Toast.makeText(this, "has hecho click en el botn Eliminar", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "has hecho click en el botn Eliminar", Toast.LENGTH_SHORT).show();
+                codigo = et_codigo.getText().toString();
+                int cant = bd.delete("articulos", "codigo" + codigo, null);
+                bd.close();
+                et_codigo.setText("");
+                et_descripcion.setText("");
+                et_precio.setText("");
+
+                if(cant == 1){
+                    Toast.makeText(this, "Has eliminado el registro", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "No existe el articulo", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.btnActualizar:
                 Toast.makeText(this, "has hecho click en el botn Actualizar", Toast.LENGTH_SHORT).show();
