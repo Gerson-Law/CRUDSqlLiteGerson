@@ -1,5 +1,7 @@
 package com.itca.crud_sqllite_gerson;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -21,7 +23,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,"administracion.db" ,null,1);
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -96,9 +102,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+
+
         switch (view.getId()) {
             case R.id.btnAlta:
-                Toast.makeText(this, "has hecho click en el botn Alta", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "has hecho click en el botn Alta", Toast.LENGTH_SHORT).show();
+                SQLiteDatabase bd = admin.getWritableDatabase();
+                AdminSQLiteOpenHelper admin =new AdminSQLiteOpenHelper(this,"administracion.db" ,null,1) ;
+                String codigo = et_codigo.getText().toString();
+                String descripcion = et_descripcion.getText().toString();
+                String precio = et_precio.getText().toString();
+
+                ContentValues registro = new ContentValues();
+                registro.put("codigo", codigo);
+                registro.put("descripcion", descripcion);
+                registro.put("precio", precio);
+                bd.insert("articulos", null, registro);
+                if(codigo.isEmpty()){
+                    et_codigo.setError("campo obligatorio.");
+                }else if(descripcion.isEmpty()){
+                    et_descripcion.setError("campo obligatorio");
+                }else if(precio.isEmpty()){
+                    et_precio.setError("Campo obligatorio");
+                }else{
+
+                    bd.close();
+                    et_codigo.setText(null);
+                    et_descripcion.setText(null);
+                    et_precio.setText(null);
+                    Toast.makeText(this, "Registro guardado correctamente", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.btnConsulta1:
                 Toast.makeText(this, "has hecho click en el botn Consulta1", Toast.LENGTH_SHORT).show();
