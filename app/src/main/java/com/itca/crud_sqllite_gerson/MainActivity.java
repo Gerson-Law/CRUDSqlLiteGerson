@@ -182,13 +182,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnActualizar:
-                Toast.makeText(this, "has hecho click en el botn Actualizar", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "has hecho click en el botn Actualizar", Toast.LENGTH_SHORT).show();
+                codigo = et_codigo.getText().toString();
+                descripcion = et_descripcion.getText().toString();
+                precio = et_precio.getText().toString();
+
+                registro.put("codigo",codigo);
+                registro.put("descripcion",descripcion);
+                registro.put("precio",precio);
+
+                cant = bd.update("articulos", registro, "codigo=" + codigo, null);
+                bd.close();
+
+                if(cant == 1){
+                Toast.makeText(this, "Has actualizado el articulo", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, "No existe el articulo", Toast.LENGTH_SHORT).show();
+            }
+
                 break;
             case R.id.btnNuevo:
-                Toast.makeText(this, "has hecho click en el botn Nuevo", Toast.LENGTH_SHORT).show();
+                /*Toast.makeText(this, "has hecho click en el botn Nuevo", Toast.LENGTH_SHORT).show();
+                et_codigo = (EditText) findViewById(R.id.et_codigo);
+               et_descripcion = (EditText) findViewById(R.id.et_descripcion);
+                et_precio = (EditText) findViewById(R.id.et_precio);
+                final String clear = new String("Ingrese Datos");*/
+
+                et_codigo.setText("");
+                et_descripcion.setText("");
+                et_precio.setText("");
+
                 break;
             case R.id.btnSalir:
-                Toast.makeText(this, "has hecho click en el botn Salir", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "has hecho click en el botn Salir", Toast.LENGTH_SHORT).show();
+               // System.exit(0);
+                finish();
+
                 break;
         }
 
